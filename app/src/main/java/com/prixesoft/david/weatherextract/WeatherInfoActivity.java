@@ -1,11 +1,21 @@
 package com.prixesoft.david.weatherextract;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.prixesoft.david.weatherextract.model.Weather;
@@ -20,6 +30,7 @@ public class WeatherInfoActivity extends AppCompatActivity {
 
     private TextView txtSpeedWind , txtTemperature , txtPresure , txtHumidity , txtWeatherCond , txtCity;
 
+    private RelativeLayout generalLayout;
 
     private String longitude , latitude , location ;
 
@@ -27,6 +38,19 @@ public class WeatherInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_info);
+        generalLayout =(RelativeLayout) findViewById(R.id.layout_weather_info);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar_layout);
+        ImageButton btnBack = (ImageButton)  getSupportActionBar().getCustomView().findViewById(R.id.btnBack);
+        btnBack.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                backButtonAction();
+
+            }
+        });
 
         // Retrieving GUI textViews
         txtCity = (TextView) findViewById(R.id.txtCity);
@@ -44,10 +68,16 @@ public class WeatherInfoActivity extends AppCompatActivity {
         location = longitude + "," + latitude ;
 
 
+
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Processing the request and the information");
+        pd.show();
+
+
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{location});
 
-
+        pd.hide();
     }
 
 
@@ -79,9 +109,12 @@ public class WeatherInfoActivity extends AppCompatActivity {
         protected void onPostExecute(Weather weather) {
             super.onPostExecute(weather);
 
+
+            // not working still
             if (weather.iconData != null && weather.iconData.length > 0) {
-                Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
-             //   imgView.setImageBitmap(img);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
+                Drawable image = new BitmapDrawable(getResources(),bitmap);
+                generalLayout.setBackground(image);
             }
 
             txtCity.setText(weather.location.getCity() + "," + weather.location.getCountry());
@@ -100,5 +133,10 @@ public class WeatherInfoActivity extends AppCompatActivity {
 
 
 
+    }
+
+    void backButtonAction(){
+        Intent intentBack = new Intent(this,MapsActivity.class);
+        startActivity(intentBack);
     }
 }

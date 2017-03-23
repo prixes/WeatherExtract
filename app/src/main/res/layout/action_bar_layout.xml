@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -8,9 +9,10 @@
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="45dp"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:adjustViewBounds="true"
-        android:padding="1dp"
+        android:background="@android:color/transparent"
+        android:padding="8dp"
         android:scaleType="fitXY"
         android:visibility="invisible"
         app:srcCompat="@drawable/back_arrow" />
@@ -25,6 +27,7 @@
         android:paddingRight="25dp"
         android:text="@string/title_activity_maps"
         android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:ignore="RtlSymmetry" />
 
 </LinearLayout>
