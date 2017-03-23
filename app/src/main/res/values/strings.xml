@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Weather Extract</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Weather Extract App</string>
+    <string name="btn_select_location">Get Weather</string>
 </resources>
