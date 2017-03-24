@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+<data>
+    <variable name="weather_ui" type="com.prixesoft.david.weatherextract.model.WeatherUI"/>
+</data>
+
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_weather_info">
+    >
 
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="180dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
@@ -30,13 +36,14 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/weather_condition_icon"
-                android:padding="5dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:src="@{weather_ui.iconWeather, default=@drawable/icon_x}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
@@ -51,6 +58,7 @@
                     android:id="@+id/txtCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{weather_ui.city}"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -65,6 +73,7 @@
                     android:id="@+id/txtWeatherCond"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{weather_ui.weatherCond}"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -80,7 +89,7 @@
                     android:id="@+id/imageView3"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
                     android:contentDescription="@string/icon_temp"
                     custom:srcCompat="@drawable/icon_temp" />
 
@@ -88,6 +97,7 @@
                     android:id="@+id/txtTemperature"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{weather_ui.temperature}"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -103,7 +113,7 @@
                     android:id="@+id/imageView7"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
                     android:contentDescription="@string/icon_wind"
                     custom:srcCompat="@drawable/icon_wind" />
 
@@ -111,6 +121,7 @@
                     android:id="@+id/txtSpeedWind"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{weather_ui.windSpeed}"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -126,14 +137,15 @@
                     android:id="@+id/imageView5"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
                     android:contentDescription="@string/icon_pressure"
                     custom:srcCompat="@drawable/icon_pressure" />
 
                 <TextView
-                    android:id="@+id/txtPresure"
+                    android:id="@+id/txtPressure"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{weather_ui.pressure}"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -149,7 +161,7 @@
                     android:id="@+id/imageView6"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
                     android:contentDescription="@string/icon_humidity"
                     custom:srcCompat="@drawable/icon_humidity" />
 
@@ -157,6 +169,7 @@
                     android:id="@+id/txtHumidity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{weather_ui.humidity}"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -166,3 +179,4 @@
     </ScrollView>
 
 </RelativeLayout>
+</layout>

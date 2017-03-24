@@ -3,9 +3,9 @@ package com.prixesoft.david.weatherextract;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -16,11 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.prixesoft.david.weatherextract.model.Weather;
+import com.prixesoft.david.weatherextract.model.WeatherUI;
+import com.prixesoft.david.weatherextract.databinding.WeatherInfoBinding;
 
 import org.json.JSONException;
 
@@ -32,19 +32,19 @@ public class WeatherInfoActivity extends AppCompatActivity {
 
     // all the general components that we will use GUI-elements and variables
 
-    private TextView txtSpeedWind , txtTemperature , txtPressure, txtHumidity , txtWeatherCond , txtCity;
-
     private String longitude , latitude , location ;
 
-    private ImageView imgWeather;
-
     private ProgressDialog dialog;
+
+    WeatherUI weatherUI;
+    WeatherInfoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_info);
-        imgWeather = (ImageView) findViewById(R.id.icon_weather);
+        binding = DataBindingUtil.setContentView(this, R.layout.weather_info);
+        weatherUI = new WeatherUI();
 
 
         // Setting the custom action bar with back button
@@ -59,14 +59,6 @@ public class WeatherInfoActivity extends AppCompatActivity {
 
             }
         });
-
-        // Retrieving GUI textViews
-        txtCity = (TextView) findViewById(R.id.txtCity);
-        txtSpeedWind = (TextView) findViewById(R.id.txtSpeedWind);
-        txtTemperature = (TextView) findViewById(R.id.txtTemperature);
-        txtPressure = (TextView) findViewById(R.id.txtPresure);
-        txtHumidity = (TextView) findViewById(R.id.txtHumidity);
-        txtWeatherCond = (TextView) findViewById(R.id.txtWeatherCond);
 
 
         // Retrieving the information from MapsActivity
@@ -126,18 +118,21 @@ public class WeatherInfoActivity extends AppCompatActivity {
             super.onPostExecute(weather);
 
 
-            // Setting the small resolution icons that openweathermap provides ( yes it's ugly )
+            // Setting the small resolution icons that openweathermap provides
             if (weather.iconData != null && weather.iconData.length > 0) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
-                imgWeather.setImageBitmap(bitmap);
+                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                weatherUI.setIconWeather(drawable);
             }
 
-            txtCity.setText(weather.location.getCity() + "," + weather.location.getCountry());
-            txtWeatherCond.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-            txtTemperature.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "°C");
-            txtHumidity.setText("" + weather.currentCondition.getHumidity() + " %");
-            txtPressure.setText("" + weather.currentCondition.getPressure() + " hPa");
-            txtSpeedWind.setText("" + weather.wind.getSpeed() + " m/s");
+            // Setting the information to the model and biding it
+            weatherUI.setCity(" " + weather.location.getCity() + " , " + weather.location.getCountry());
+            weatherUI.setWeatherCond(weather.currentCondition.getCondition());
+            weatherUI.setTemperature(Math.round((weather.temperature.getTemp() - 273.15)) + "°C");
+            weatherUI.setHumidity(weather.currentCondition.getHumidity() + " %");
+            weatherUI.setPressure(weather.currentCondition.getPressure() + " hPa");
+            weatherUI.setWindSpeed(weather.wind.getSpeed() + " m/s");
+            binding.setWeatherUi(weatherUI);
 
 
             // job finished remove the dialog
