@@ -17,6 +17,9 @@ public class WeatherHttpClient {
     private static String IMG_URL = "http://openweathermap.org/img/w/";
     private static String API_KEY = "3e7e9c10ac28ea8736eda23c2b828063";
 
+
+    // Making request to the server with location data and the API key
+    // Write response to result string
     public String getWeatherData(String latitude, String longitude ) {
         HttpURLConnection con = null ;
         InputStream is = null;
@@ -55,14 +58,15 @@ public class WeatherHttpClient {
 
     }
 
+    // Get the condition weather icon
     public byte[] getImage(String code) {
         HttpURLConnection con = null ;
         InputStream is = null;
         try {
-            con = (HttpURLConnection) ( new URL(IMG_URL + code)).openConnection();
+            con = (HttpURLConnection) ( new URL(IMG_URL + code + ".png")).openConnection();
             con.setRequestMethod("GET");
             con.setDoInput(true);
-            con.setDoOutput(true);
+            //con.setDoOutput(true); <---- crashes everything no idea why :/
             con.connect();
 
             // Let's read the response

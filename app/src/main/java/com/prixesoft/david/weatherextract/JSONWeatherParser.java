@@ -4,9 +4,6 @@ package com.prixesoft.david.weatherextract;
  * Created by david on 23-Mar-17.
  */
 
-
-
-
         import com.prixesoft.david.weatherextract.model.Weather;
         import com.prixesoft.david.weatherextract.model.Location;
 
@@ -14,10 +11,12 @@ package com.prixesoft.david.weatherextract;
         import org.json.JSONException;
         import org.json.JSONObject;
 
-
-
+// JSON parser that will output weather model result
 
 public class JSONWeatherParser {
+
+
+    // Parsing the result received from the api server to weather class format
 
     public static Weather getWeather(String data) throws JSONException  {
         Weather weather = new Weather();
@@ -65,7 +64,7 @@ public class JSONWeatherParser {
         JSONObject cObj = getObject("clouds", jObj);
         weather.clouds.setPerc(getInt("all", cObj));
 
-        // We download the icon to show
+
 
 
         return weather;

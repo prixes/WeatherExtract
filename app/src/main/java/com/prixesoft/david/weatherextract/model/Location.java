@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Created by david on 23-Mar-17.
  */
 
+// Simple location info model/container
+
 public class Location implements Serializable {
 
     private float longitude;

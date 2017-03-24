@@ -2,4 +2,7 @@
     <string name="app_name">Weather Extract</string>
     <string name="title_activity_maps">Weather Extract App</string>
     <string name="btn_select_location">Get Weather</string>
+    <string name="longitude">longitude</string>
+    <string name="latitude">latitude</string>
+    <string name="inform_loading">Progress start</string>
 </resources>

@@ -25,6 +25,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        // Setting custom action bar ( centered and have back button for the next activity )
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
 
@@ -36,28 +37,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-
         mMap = googleMap;
-
-
 
         // Add a marker in Sofia and move the camera
         LatLng sofia = new LatLng(42.697705, 23.321638);
-        marker = mMap.addMarker(new MarkerOptions().position(sofia).title("Marker in Sofia"));
+        marker = mMap.addMarker(new MarkerOptions().position(sofia));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sofia));
 
+        // Marker will be our "X" hindsight
+        // This is kind of heavy way to do it. But it's smooth and interactive.
+        // Listener to start making that on move
         mMap.setOnCameraMoveListener (new GoogleMap.OnCameraMoveListener () {
             @Override
             public void onCameraMove() {
@@ -68,32 +60,34 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         });
 
-        googleMap.setOnMarkerClickListener(this);
 
+        // Extra listener for on marker click  ... showing long and lat
+        googleMap.setOnMarkerClickListener(this);
 
     }
 
-
+    // Simple get-set method saves some extra callings
     void addLocation(){
         longitude = mMap.getCameraPosition().target.longitude;
         latitude =  mMap.getCameraPosition().target.latitude;
     }
 
 
-
+    // Extra listener for on marker click  ... showing long and lat
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if (marker.equals(marker))
-        {
+
             addLocation();
             marker.setTitle("Current Selection");
             marker.setSnippet("Lat:" + latitude + " Long:" + longitude);
-        }
+
 
         return false;
     }
 
 
+
+    // Move on to the next activity giving required information for getting weather
     public void onButtonClick(View view){
         addLocation();
         Intent intentWeatherInfo = new Intent(this,WeatherInfoActivity.class);

@@ -4,6 +4,8 @@ package com.prixesoft.david.weatherextract.model;
  * Created by david on 23-Mar-17.
  */
 
+// Simple weather model with getters and setters -encapsulated
+
 public class Weather {
 
     public Location location;
@@ -62,7 +64,6 @@ public class Weather {
         public void setHumidity(float humidity) {
             this.humidity = humidity;
         }
-
 
     }
 
@@ -127,8 +128,6 @@ public class Weather {
             this.ammount = ammount;
         }
 
-
-
     }
 
     public  class Snow {
@@ -138,17 +137,18 @@ public class Weather {
         public String getTime() {
             return time;
         }
+
         public void setTime(String time) {
             this.time = time;
         }
+
         public float getAmmount() {
             return ammount;
         }
+
         public void setAmmount(float ammount) {
             this.ammount = ammount;
         }
-
-
     }
 
     public  class Clouds {
@@ -161,7 +161,6 @@ public class Weather {
         public void setPerc(int perc) {
             this.perc = perc;
         }
-
 
     }
 
