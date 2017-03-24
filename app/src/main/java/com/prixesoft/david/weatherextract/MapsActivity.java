@@ -44,22 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Add a marker in Sofia and move the camera
         LatLng sofia = new LatLng(42.697705, 23.321638);
-        marker = mMap.addMarker(new MarkerOptions().position(sofia));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sofia));
-
-        // Marker will be our "X" hindsight
-        // This is kind of heavy way to do it. But it's smooth and interactive.
-        // Listener to start making that on move
-        mMap.setOnCameraMoveListener (new GoogleMap.OnCameraMoveListener () {
-            @Override
-            public void onCameraMove() {
-                mMap.clear();
-                marker = mMap.addMarker(new MarkerOptions().position(mMap.getCameraPosition().target));
-            }
-
-
-        });
-
 
         // Extra listener for on marker click  ... showing long and lat
         googleMap.setOnMarkerClickListener(this);

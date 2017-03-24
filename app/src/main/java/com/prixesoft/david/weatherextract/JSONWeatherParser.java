@@ -80,8 +80,14 @@ public class JSONWeatherParser {
         return jObj.getString(tagName);
     }
 
-    private static float  getFloat(String tagName, JSONObject jObj) throws JSONException {
-        return (float) jObj.getDouble(tagName);
+    private static float  getFloat(String tagName, JSONObject jObj)  {
+        try {
+            return (float) jObj.getDouble(tagName);
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+            return (float) 0.00;
+        }
     }
 
     private static int  getInt(String tagName, JSONObject jObj) throws JSONException {

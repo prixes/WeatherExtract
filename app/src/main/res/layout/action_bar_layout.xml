@@ -15,7 +15,8 @@
         android:padding="8dp"
         android:scaleType="fitXY"
         android:visibility="invisible"
-        app:srcCompat="@drawable/back_arrow" />
+        app:srcCompat="@drawable/back_arrow"
+        android:contentDescription="" />
 
     <TextView
         android:id="@+id/title"

@@ -1,6 +1,7 @@
 package com.prixesoft.david.weatherextract;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -98,7 +100,11 @@ public class WeatherInfoActivity extends AppCompatActivity {
         protected Weather doInBackground(String... params) {
             Weather weather = new Weather();
             String data = ( (new WeatherHttpClient()).getWeatherData(latitude,longitude));
+            if(data == null) {
+                displayMsgBox("Failed to receive information from the weather server. Please try again!","Bad response from server!");
 
+                return new Weather(); /// FIX THIS
+            }
             try {
                 //Try extract the weather info
                 weather = JSONWeatherParser.getWeather(data);
@@ -141,6 +147,27 @@ public class WeatherInfoActivity extends AppCompatActivity {
 
         }
 
+
+    }
+
+
+    //Error or Success messages
+    public void displayMsgBox(String msg,String title) {
+        final AlertDialog.Builder msgBox = new AlertDialog.Builder(this);
+        msgBox.setMessage(msg);
+        msgBox.setTitle(title);
+        msgBox.setPositiveButton(R.string.ok, null);
+        msgBox.setCancelable(true);
+
+        msgBox.setPositiveButton(R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        onBackPressed();
+                        msgBox.create().hide();
+                    }
+                });
+        msgBox.create().show();
 
     }
 

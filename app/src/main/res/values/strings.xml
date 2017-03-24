@@ -5,4 +5,12 @@
     <string name="longitude">longitude</string>
     <string name="latitude">latitude</string>
     <string name="inform_loading">Progress start</string>
+    <string name="ok">Ok</string>
+    <string name="lbl_locaton">Location :</string>
+    <string name="lbl_city">City</string>
+    <string name="icon_humidity">Icon Humidity</string>
+    <string name="icon_pressure">Icon pressure</string>
+    <string name="icon_wind">Icon Wind</string>
+    <string name="icon_temp">Icon temperature</string>
+    <string name="weather_condition_icon">weather_cond_icon</string>
 </resources>
